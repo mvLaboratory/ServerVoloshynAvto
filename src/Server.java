@@ -1,69 +1,41 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import javax.swing.*;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Server {
-    public static void main(String[] args) throws IOException {
-        System.out.println("Welcome to Server side");
-        BufferedReader in = null;
-        PrintWriter out= null;
-        ServerSocket servers = null;
-        Socket fromClient = null;
+public class Server implements Runnable {
+    private static Socket connection;
+    private static ServerSocket server;
+    private static ObjectOutputStream output;
+    private static ObjectInputStream input;
 
-        // create server socket
-        try {
-            servers = new ServerSocket(4444);
-        } catch (IOException e) {
-            System.out.println("Couldn't listen to port 4444");
-            System.exit(-1);
-        }
-
-        boolean serverActive = true;
-
-        //while (serverActive) {
-            try {
-                System.out.print("Waiting for a client...");
-                fromClient = servers.accept();
-                System.out.println("Client connected");
-            } catch (IOException e) {
-                System.out.println("Can't accept");
-                System.exit(-1);
-            }
-
-            in = new BufferedReader(new
-                    InputStreamReader(fromClient.getInputStream()));
-            out = new PrintWriter(fromClient.getOutputStream(), true);
-            String input, output;
-            System.out.println("Wait for messages");
-
-            //server+++
-            String clientMessage;
-            boolean serverAvailable = true;
-//            while (serverAvailable) {
-//                clientMessage = in.readLine();
-//                if (clientMessage == null) {
-//                    continue;
-//                }
-//                if (clientMessage.equalsIgnoreCase("check")) out.println("catch");
-//                if (clientMessage.equalsIgnoreCase("exit")) serverAvailable = false;
-//                System.out.println(clientMessage);
-//            }
-//
-//            out.close();
-//            in.close();
-//            fromClient.close();
-//            servers.close();
-
-            try {
-                Thread.sleep(2000);
-                System.out.println("circle");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        //}
+    public static void main(String[] args) {
+        new Thread(new Server()).start();
     }
 
+    public Server() {
+    }
+
+    @Override
+    public void run() {
+        try {
+            server = new ServerSocket(5678, 100);
+            System.out.println("Server are running");
+        } catch (Exception e) {
+            System.out.println("coonection failed");
+        }
+        while (true) {
+            try {
+                connection = server.accept();
+                output = new ObjectOutputStream(connection.getOutputStream());
+                input = new ObjectInputStream(connection.getInputStream());
+                //JOptionPane.showMessageDialog(null, (String) input.readObject());
+                output.writeObject("ping; " + (String) input.readObject());
+            } catch (Exception e) {
+                System.out.println("coonection failed");
+            }
+        }
+    }
 }
