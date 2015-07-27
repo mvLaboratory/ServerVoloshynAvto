@@ -15,9 +15,6 @@ public class Server implements Runnable {
         new Thread(new Server()).start();
     }
 
-    public Server() {
-    }
-
     @Override
     public void run() {
         try {
@@ -31,8 +28,11 @@ public class Server implements Runnable {
                 connection = server.accept();
                 output = new ObjectOutputStream(connection.getOutputStream());
                 input = new ObjectInputStream(connection.getInputStream());
-                //JOptionPane.showMessageDialog(null, (String) input.readObject());
-                output.writeObject("ping; " + (String) input.readObject());
+                String massage;
+                if ((massage = (String) input.readObject()) != null) {
+                    output.writeObject("ping; " + massage);
+                    System.out.println("send" + massage);
+                }
             } catch (Exception e) {
                 System.out.println("coonection failed");
             }
