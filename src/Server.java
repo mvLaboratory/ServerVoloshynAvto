@@ -4,6 +4,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.UUID;
 
 public class Server implements Runnable {
     private static Socket connection;
@@ -30,6 +31,8 @@ public class Server implements Runnable {
                 input = new ObjectInputStream(connection.getInputStream());
                 String massage;
                 if ((massage = (String) input.readObject()) != null) {
+                    FileConstructor fConstractor = new FileConstructor(1, 2, new UUID(222,2));
+                    fConstractor.createDocument();
                     output.writeObject("ping; " + massage);
                     System.out.println("send" + massage);
                 }
