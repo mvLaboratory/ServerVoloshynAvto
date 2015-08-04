@@ -55,6 +55,46 @@ public class FileConstructor {
             Element filter = doc.createElement("Filter");
             register.appendChild(filter);
 
+                Element recorder = doc.createElement("Recorder");
+                    Attr atrFilter = doc.createAttribute("xsi:type");
+                    atrFilter.setValue("DocumentRef.ПутевойЛист");
+                    recorder.setAttributeNode(atrFilter);
+                recorder.appendChild(doc.createTextNode(avto.toString()));
+                filter.appendChild(recorder);
+
+            Element records = doc.createElement("records");
+            register.appendChild(records);
+
+            Element record = doc.createElement("record");
+            records.appendChild(record);
+
+            Element recorder2 = doc.createElement("Recorder");
+                Attr atrrecorder = doc.createAttribute("xsi:type");
+                atrrecorder.setValue("DocumentRef.ПутевойЛист");
+                recorder2.setAttributeNode(atrrecorder);
+                recorder2.appendChild(doc.createTextNode(avto.toString()));
+            record.appendChild(recorder2);
+
+            Element period = doc.createElement("Period");
+            period.appendChild(doc.createTextNode("2022-09-15T06:22:33"));
+            record.appendChild(period);
+
+            Element active = doc.createElement("Active");
+            active.appendChild(doc.createTextNode("true"));
+            record.appendChild(active);
+
+            Element avtomobile = doc.createElement("Автомобиль");
+            avtomobile.appendChild(doc.createTextNode(avto.toString()));
+            record.appendChild(avtomobile);
+
+            Element org = doc.createElement("Организация");
+            org.appendChild(doc.createTextNode(avto.toString()));
+            record.appendChild(org);
+
+            Element value = doc.createElement("Показатель");
+            value.appendChild(doc.createTextNode("666"));
+            record.appendChild(value);
+
 //            Element recorder = doc.createElement("Recorder");
 //                Attr atrFilter = doc.createAttribute("xsi:type");
 //                atrFilter.setValue("DocumentRef.ПутевойЛист");
