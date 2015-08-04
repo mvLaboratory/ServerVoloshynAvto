@@ -31,8 +31,10 @@ public class Server implements Runnable {
                 input = new ObjectInputStream(connection.getInputStream());
                 String massage;
                 if ((massage = (String) input.readObject()) != null) {
-                    FileConstructor fConstractor = new FileConstructor(1, 2, new UUID(222,2));
-                    fConstractor.createDocument();
+                    try {
+                        FileConstructor fConstractor = new FileConstructor(1, 2, new UUID(222,2));
+                        fConstractor.createDocument();
+                    } catch (Exception xmlEx) {massage = "can't write xml to " + massage;}
                     output.writeObject("ping; " + massage);
                     System.out.println("send" + massage);
                 }
