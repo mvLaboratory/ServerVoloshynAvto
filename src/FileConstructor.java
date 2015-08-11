@@ -134,7 +134,8 @@ public class FileConstructor {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File("D:\\MV-lab\\Java\\src\\ClientVoloshynAvto\\out\\out.xml"));
+//            StreamResult result = new StreamResult(new File("D:\\MV-lab\\Java\\src\\ClientVoloshynAvto\\out\\out.xml"));
+            StreamResult result = new StreamResult(new File(Server.outFileAdress));
 
             // Output to console for testing
             // StreamResult result = new StreamResult(System.out);

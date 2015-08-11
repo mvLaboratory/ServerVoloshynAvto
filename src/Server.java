@@ -11,8 +11,12 @@ public class Server implements Runnable {
     private static ServerSocket server;
     private static ObjectOutputStream output;
     private static ObjectInputStream input;
+    public static String outFileAdress;
 
     public static void main(String[] args) {
+        if (args.length > 0) {
+            outFileAdress = args[0];
+        }
         new Thread(new Server()).start();
     }
 
